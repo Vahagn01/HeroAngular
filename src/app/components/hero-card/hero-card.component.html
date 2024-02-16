@@ -1,0 +1,67 @@
+<div class="col animated fadeIn fast" style="min-height: 202px;">
+    <div class="card m-2"> 
+        <button (click)="openModal(confirmationModal)"  class="btn btn-link text-danger delete-button d-flex flex-row-reverse shadow-none" aria-label="Borrar">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+        <img [src]="hero.img" class="card-img-top img-fluid" [alt]="hero.nombre">
+        <div class="card-body">
+            <h5 class="card-title">{{hero.nombre}}</h5>
+            <p class="card-text bio" style="max-height: 6rem; overflow-y: auto;">{{hero.bio}}</p>
+            <p class="card-text"><small class="text-muted">{{hero.aparicion}} {{hero.casa}}</small></p>
+            <div class="d-grid gap-2">
+                <button (click)="viewHero()" type="button" class="btn btn-outline-primary">Ver más...</button>
+                <button (click)="openModal(editModal)" type="button" class="btn btn-dark">Editar</button>
+            </div>
+        </div> 
+    </div>
+</div> 
+ 
+ 
+<ng-template #editModal class="modal fade"  tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true"  style="z-index: 1050 !important;">   
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Héroe</h5>
+                    <button type="button" (click)="closeModal()" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"> 
+                    <form (ngSubmit)="submitForm()" #editForm="ngForm">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" [(ngModel)]="heroCopy.nombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Biografía</label>
+                            <textarea class="form-control" id="bio" [(ngModel)]="heroCopy.bio" name="bio" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="img" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" id="img" (change)="onFileSelected($event)" name="img" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="aparicion" class="form-label">Aparición</label>
+                            <input type="text" class="form-control" id="aparicion" [(ngModel)]="heroCopy.aparicion" name="aparicion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="casa" class="form-label">Casa</label>
+                            <input type="text" class="form-control" id="casa" [(ngModel)]="heroCopy.casa" name="casa" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>                    
+                </div>
+            </div> 
+</ng-template>
+
+
+<ng-template #confirmationModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirmación de borrado</h4>
+      <button type="button" (click)="closeModal()" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button> 
+    </div>
+    <div class="modal-body">
+      <p>¿Estás seguro de que quieres borrar a {{ hero.nombre }}?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="deleteHero(); modal.close()">Borrar</button>
+    </div>
+  </ng-template>

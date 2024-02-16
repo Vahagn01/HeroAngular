@@ -1,0 +1,31 @@
+<app-navbar [hideSearchForm]="true"></app-navbar>
+
+
+<div class="text-center my-3" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+  
+
+<div class="row m-3 animated fadeIn"  *ngIf="!loading">
+    <h1 class="m-3 animated fadeIn">{{hero.nombre | uppercase}} <small>({{hero.aparicion | date:'y'}})</small></h1>
+    <hr>
+
+    <div class="col-md-4">
+        <img [src]="hero.img" [alt]="hero.nombre" class="img-fluid">
+        <br><br>
+        <div class="d-grid gap-2 m-2 mb-4">
+            <button type="button" (click)="return()" class="btn btn-outline-danger">Return Heroes</button>
+        </div>
+    </div>
+
+    <div class="col-md-8 ">
+        <div class="d-flex align-items-center">
+            <h3>{{hero.nombre}} </h3>
+            <img class="img-logo ms-2" width="40px" [src]="'assets/img/' + hero.casa.toLowerCase() + '.png'" alt="casa"> 
+        </div> 
+        <hr>
+        <p class="lead">{{hero.bio}}</p>
+    </div>
+</div>

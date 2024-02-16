@@ -1,0 +1,61 @@
+<app-navbar (searchEvent)="buscarHeroes($event)"></app-navbar>
+
+<div class="d-flex align-items-center justify-content-between">
+    <h1 class="m-3">HEROES</h1>
+    <button class="btn btn-success me-3" (click)="openEditModal(addModal)">+Añadir Héroe</button>
+</div>
+<hr class="m-3">
+
+<div class="text-center my-3" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+  
+<div class="row" *ngIf="heroes.length == 0 && !loading">
+    <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+            No results with that search
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-4 m-3">
+    <app-hero-card (updateList)="getHeroes()" [hero]="hero" [idx]="hero.id" *ngFor='let hero of heroes, let i = index'> </app-hero-card>
+</div>
+
+ 
+<ng-template #addModal class="modal fade"  tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true"  style="z-index: 1050 !important;">   
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Editar Héroe</h5>
+            <button type="button" (click)="closeModal()" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"> 
+            <form (ngSubmit)="submitForm()" #editForm="ngForm">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" [(ngModel)]="hero.nombre" name="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bio" class="form-label">Biografía</label>
+                    <textarea class="form-control" id="bio" [(ngModel)]="hero.bio" name="bio" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="img" class="form-label">Imagen</label>
+                    <input type="file" class="form-control" id="img" (change)="onFileSelected($event)" name="img" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label for="aparicion" class="form-label">Aparición</label>
+                    <input type="text" class="form-control" id="aparicion" [(ngModel)]="hero.aparicion" name="aparicion" required>
+                </div>
+                <div class="mb-3">
+                    <label for="casa" class="form-label">Casa</label>
+                    <input type="text" class="form-control" id="casa" [(ngModel)]="hero.casa" name="casa" required>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Guardar</button>
+            </form>
+                           
+        </div>
+    </div> 
+</ng-template>

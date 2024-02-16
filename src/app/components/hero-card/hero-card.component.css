@@ -1,0 +1,6 @@
+/*Hay un problema en el que el z-index del fondo se ha forzado a 1055 mediante un estilo en línea: 
+<ngb-modal-backdrop style="z-index: 1050" class="modal-backdrop fade show"> aplicado por boostrap
+Para solucionarlo, he agregado la siguiente regla CSS:" */
+::ng-deep ngb-modal-backdrop {
+    z-index: 1000 !important;
+  }
